@@ -61,6 +61,15 @@ export function evaluate(src) {
 export const startsWithOp = (s) => /^\s*[+\-*/×÷]/.test(s);
 export const cleanInput = (v) => v.replace(/[^0-9+\-*/().,×÷ ]/g, "");
 
+// ใส่ลูกน้ำให้ตัวเลขทุกตัวในสูตร เช่น "1234567+89000" -> "1,234,567+89,000"
+export function fmtExpr(s) {
+  return String(s ?? "")
+    .replace(/,/g, "")
+    .replace(/(\d+)(\.\d*)?|\.\d+/g, (m, int, dec) =>
+      int === undefined ? m : int.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (dec || "")
+    );
+}
+
 export function fmt(n) {
   if (n === null || n === undefined) return "–";
   const x = Object.is(n, -0) ? 0 : n;

@@ -51,11 +51,13 @@ nav { display: flex; flex-direction: column; gap: 8px; }
 .tab[data-tab="calc"]    { border-left-color: var(--logo-blue); }
 .tab[data-tab="summary"] { border-left-color: var(--logo-green); }
 .tab[data-tab="target"]  { border-left-color: var(--logo-brown); }
+.tab[data-tab="deposit"] { border-left-color: var(--logo-gray); }
 .tab:hover { background: #eef3f2; }
 .tab.active { font-weight: 800; }
 .tab.active[data-tab="calc"]    { background: var(--logo-blue); }
 .tab.active[data-tab="summary"] { background: var(--logo-green); }
 .tab.active[data-tab="target"]  { background: var(--logo-brown); }
+.tab.active[data-tab="deposit"] { background: var(--logo-gray); }
 .ico { font-size: 22px; }
 
 /* ---------- เนื้อหา ---------- */
@@ -159,6 +161,7 @@ h2 { margin: 0; font-size: 18px; }
   .tab[data-tab="calc"] { border-top-color: var(--logo-blue); }
   .tab[data-tab="summary"] { border-top-color: var(--logo-green); }
   .tab[data-tab="target"] { border-top-color: var(--logo-brown); }
+  .tab[data-tab="deposit"] { border-top-color: var(--logo-gray); }
   .main { padding: 16px 12px 100px; }
   h1 { font-size: 24px; }
   .tape-wrap { grid-template-columns: 1fr; }
@@ -169,4 +172,46 @@ h2 { margin: 0; font-size: 18px; }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
+}
+
+/* ---------- หน้า 4: ฝากเงิน (คาเฟ่ซ้าย / โรงพยาบาลขวา) ---------- */
+.main:has(.dep-grid) { max-width: 1280px; }
+.dep-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 24px; align-items: start; }
+.dep-section { min-width: 0; }
+.stat { color: #fff; border-radius: var(--radius); padding: 14px 20px; margin-bottom: 8px; }
+.stat span { display: block; font-size: 18px; font-weight: 700; opacity: .95; }
+.stat strong { display: block; font-size: 52px; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.stat.cafe { background: var(--brand); }
+.stat.hospital { background: #7d5f38; }
+.dep-tools { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 6px; }
+
+.day { margin-bottom: 12px; padding: 14px 16px; }
+.day-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.date-input {
+  border: 2px solid var(--line); border-radius: 10px; padding: 8px 12px;
+  font-size: 20px; background: #fff; color: var(--text);
+}
+.date-input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 4px rgba(59, 106, 122, .15); }
+.date-th { flex: 1; color: var(--muted); font-size: 16px; }
+.shift {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 10px; border-radius: 12px; margin-bottom: 6px; background: #eef3f2;
+  transition: background-color .2s;
+}
+.shift.done { background: #dff0e3; }
+.shift-name { width: 70px; font-weight: 700; font-size: 20px; }
+.shift .box { text-align: right; }
+.tick { width: 34px; height: 34px; accent-color: var(--green); cursor: pointer; flex-shrink: 0; }
+.day-sum { text-align: right; color: var(--muted); font-size: 16px; padding-top: 2px; }
+.day-sum b { color: var(--text); font-size: 20px; }
+.add-day {
+  width: 100%; padding: 16px; font-size: 22px; font-weight: 800;
+  background: #fff; color: var(--brand); border: 3px dashed var(--brand); border-radius: var(--radius);
+}
+.add-day:hover { background: #eaf2f4; }
+
+@media (max-width: 800px) {
+  .dep-grid { grid-template-columns: 1fr; }
+  .stat strong { font-size: 42px; }
+  .shift-name { width: 58px; font-size: 18px; }
 }

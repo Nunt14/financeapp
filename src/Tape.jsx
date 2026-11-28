@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { cleanInput, evaluate, fmt, startsWithOp } from "./calc.js";
+import { evaluate, fmt, startsWithOp } from "./calc.js";
+import NumInput from "./NumInput.jsx";
 
 const KEYS = [
   ["7", "7"], ["8", "8"], ["9", "9"], ["÷", "÷"],
@@ -68,11 +69,11 @@ export default function Tape({ tape, placeholder }) {
           )}
           {rows.map((r) => (
             <div className="tape-row" key={r.id}>
-              <input
+              <NumInput
                 className="expr"
                 value={r.expr}
                 inputMode="decimal"
-                onChange={(e) => tape.update(r.id, cleanInput(e.target.value))}
+                onChange={(v) => tape.update(r.id, v)}
                 aria-label="แก้ไขรายการ"
               />
               <span className={"eq" + (r.value === null ? " bad" : "")}>
@@ -84,13 +85,13 @@ export default function Tape({ tape, placeholder }) {
         </div>
 
         <div className="draft">
-          <input
+          <NumInput
             ref={inputRef}
             className="draft-input"
             value={draft}
             inputMode="decimal"
             placeholder={placeholder || "พิมพ์ตัวเลข เช่น 1200+350"}
-            onChange={(e) => setDraft(cleanInput(e.target.value))}
+            onChange={setDraft}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === "=") { e.preventDefault(); commit(); }
               if (e.key === "Escape") setDraft("");

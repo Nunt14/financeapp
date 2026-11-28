@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Tape from "./Tape.jsx";
-import { cleanInput, evaluate, fmt, useLocal, useTape } from "./calc.js";
+import NumInput from "./NumInput.jsx";
+import DepositPage from "./Deposit.jsx";
+import { evaluate, fmt, useLocal, useTape } from "./calc.js";
 
 /* ------------------------- หน้า 1: เครื่องคิดเลข ------------------------- */
 function CalculatorPage() {
@@ -23,12 +25,12 @@ function MoneyField({ label, value, onChange, plus }) {
     <div className="field">
       <label>{label}</label>
       <span className="sign">=</span>
-      <input
+      <NumInput
         className="box"
         value={value}
         inputMode="decimal"
         placeholder="0"
-        onChange={(e) => onChange(cleanInput(e.target.value))}
+        onChange={onChange}
       />
       {plus && <>{plus}</>}
     </div>
@@ -53,11 +55,11 @@ function SummaryPage() {
         <div className="field">
           <label>รายจ่าย</label>
           <span className="sign">=</span>
-          <input className="box" value={f.exp1} inputMode="decimal" placeholder="0"
-            onChange={(e) => set("exp1")(cleanInput(e.target.value))} />
+          <NumInput className="box" value={f.exp1} inputMode="decimal" placeholder="0"
+            onChange={set("exp1")} />
           <span className="sign">+</span>
-          <input className="box" value={f.exp2} inputMode="decimal" placeholder="0"
-            onChange={(e) => set("exp2")(cleanInput(e.target.value))} />
+          <NumInput className="box" value={f.exp2} inputMode="decimal" placeholder="0"
+            onChange={set("exp2")} />
         </div>
 
         <MoneyField label="เครดิต" value={f.credit} onChange={set("credit")} />
@@ -103,11 +105,11 @@ function TargetPage() {
           <span>บวกแล้ว {fmt(tape.total)}</span>
           <label>
             เป้าหมาย
-            <input
+            <NumInput
               className="target-input"
               inputMode="decimal"
-              value={target}
-              onChange={(e) => setTarget(Number(e.target.value.replace(/[^0-9.]/g, "")) || 0)}
+              value={String(target)}
+              onChange={(v) => setTarget(Number(v.replace(/[^0-9.]/g, "")) || 0)}
             />
           </label>
         </div>
@@ -123,6 +125,7 @@ const TABS = [
   { id: "calc", label: "เครื่องคิดเลข", icon: "🧮", page: CalculatorPage },
   { id: "summary", label: "สรุปรายรับ", icon: "🧾", page: SummaryPage },
   { id: "target", label: "ครบเป้า 5,000", icon: "🎯", page: TargetPage },
+  { id: "deposit", label: "ฝากเงิน", icon: "🏦", page: DepositPage },
 ];
 
 export default function App() {
